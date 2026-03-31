@@ -1,0 +1,2 @@
+# Conteúdo: Funções para carregar e dividir os dados.O que deve ter:Uma função que lê o arquivo (CSV ou Parquet).
+# A lógica do train_test_split com o stratify=y e o random_state fixo (para reprodutibilidade).
