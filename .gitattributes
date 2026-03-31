@@ -1,0 +1,4 @@
+*.csv filter=lfs diff=lfs merge=lfs -text
+*.xlsx filter=lfs diff=lfs merge=lfs -text
+
+data/processed/Telco_customer_cuhrn_preprocessed.csv filter=lfs diff=lfs merge=lfs -text
