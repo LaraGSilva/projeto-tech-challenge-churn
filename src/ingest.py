@@ -1,6 +1,3 @@
-# Conteúdo: arquivo que realiza a ingestão de dados, leitura e tratamento para o modelo. Ele é responsável por ler o arquivo CSV, realizar as transformações necessárias e preparar os dados para a fase de modelagem.
-
-
 #1. Importação das bibliotecas necessárias
 import pandas as pd     
 import sqlite3
@@ -11,6 +8,9 @@ import logging
 #2. Definição de camaminhos (PATHS)
 
 #Definindo formato de logging
+LOG_DIR = "../logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+
 logging.basicConfig(
     level=logging.INFO,
     format='%(asctime)s - %(name)s - %(levelname) -%(message)s',
@@ -22,8 +22,8 @@ logging.basicConfig(
 logger = logging.getLogger("ingest")
 
 
-RAW_DATA_PATH = "data/raw/Telco_customer_churn.xlsx"  # Caminho para os dados brutos
-DB_PATH = "data/processed/churn.db" 
+RAW_DATA_PATH = "../data/raw/Telco_customer_churn.xlsx"
+DB_PATH = "../data/processed/churn.db" 
 
 
 
@@ -45,9 +45,9 @@ def ingest_data():
         logger.info(f"Arquivo de dados carregado com sucesso! Qtd total de linhas: {len(df)}")
 
         #Limpeza e Normalização de dados
-
-        df['total_charges'] = pd.to_numeric(df['total_charges'], errors='coerce').fillna(0)
         df.columns = [col.replace(" ","_").lower() for col in df.columns]
+        df['total_charges'] = pd.to_numeric(df['total_charges'], errors='coerce').fillna(0)
+        
         logger.info("Limpeza e padronixa")
 
         #Carga no sqlite
