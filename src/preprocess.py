@@ -2,7 +2,23 @@ import pandas as pd
 import joblib
 from sklearn.preprocessing import StandardScaler, OneHotEncoder
 from sklearn.compose import ColumnTransformer
-from sklearn.model_selection import train_test_split
+import logging
+import os
+
+#Definindo formato de logging
+LOG_DIR = "../logs"
+os.makedirs(LOG_DIR, exist_ok=True)
+
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s - %(name)s - %(levelname) -%(message)s',
+    handlers=[
+        logging.FileHandler("../logs/preprocess.log"),
+        logging.StreamHandler()
+    ]
+)
+logger = logging.getLogger("preprocess")
+
 
 class ChurnPreprocessor:
     def __init__(self):
@@ -30,7 +46,7 @@ class ChurnPreprocessor:
     def transform(self, X):
         return self.preprocessor.transform(X)
     
-    def save_transformer(Self, path):
+    def save_transformer(self, path):
         joblib.dump(self.preprocessor,path)
 
     def load_transformer(self, path):
