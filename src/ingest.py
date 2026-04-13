@@ -48,7 +48,7 @@ def ingest_data():
         df.columns = [col.replace(" ","_").lower() for col in df.columns]
         df['total_charges'] = pd.to_numeric(df['total_charges'], errors='coerce').fillna(0)
         
-        logger.info("Limpeza e padronixa")
+        logger.info("Limpeza e padronização")
 
         #Carga no sqlite
         with sqlite3.connect(DB_PATH) as conn:
