@@ -1,0 +1,23 @@
+artifact_path: file:c:/Users/lara-/OneDrive/Desktop/POS TECH ML/projeto-tech-challenge-churn/notebooks/mlruns/1/models/m-2652f367828d455198579ec76c841a7c/artifacts
+flavors:
+  python_function:
+    config:
+      device: null
+    data: data
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.pytorch
+    pickle_module_name: mlflow.pytorch.pickle_module
+    python_version: 3.11.9
+  pytorch:
+    code: null
+    model_data: data
+    pytorch_version: 2.11.0+cpu
+mlflow_version: 3.10.1
+model_id: m-2652f367828d455198579ec76c841a7c
+model_size_bytes: 741145
+model_uuid: m-2652f367828d455198579ec76c841a7c
+prompts: null
+run_id: c18e19aa4bd54122a84cba7f7c7b966c
+utc_time_created: '2026-04-11 17:00:11.273106'

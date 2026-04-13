@@ -19,7 +19,7 @@ Após uma análise exploratória dos dados, identificamos as seguintes principai
 - **Custo estimado:** R$ 139.000/total em receita perdida.
 - **Insight principal:** clientes churners têm ticket médio de R$ 73,02/mês e prevalecem em contratos mensais (sem fidelidade).
 
-<img src="image.png" alt="alt text" width="900" height="400">
+<img src="./imgs/churn_tipo_contrato.png" alt="alt text" width="900" height="400">
 <img src="./imgs/distribuicao_classes_churn.png" alt="Distribuição de churn" width="900" height="400">
 
 ## 👥 Stakeholders e utilização do modelo
@@ -40,6 +40,7 @@ Após uma análise exploratória dos dados, identificamos as seguintes principai
 
 ## 📌 Métricas de impacto estimadas
 - Redução de churn de 26,5% para 20% = ~450 clientes retidos.
+- Entendimento de impactos em Falsos Negativos e POsitivos tentando minimizar ao máximo perdas financeiras.
 
 
 # 📜 Model Canvas Board
