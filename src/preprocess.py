@@ -25,7 +25,7 @@ class ChurnPreprocessor:
         self.preprocessor = None
         self.feature_names = None
 
-    def create_pipeline(self,X):
+    def create_pipeline(self,X): #metodo de transformacao das colunas numericas e categoricas
         num_cols = X.select_dtypes(include=['int64','float64']).columns.tolist()
         cat_cols = X.select_dtypes(include=['object']).columns.tolist()
 
@@ -38,16 +38,18 @@ class ChurnPreprocessor:
 
         return self.preprocessor
     
-    def fit_transform(self, X):
+    def fit_transform(self, X):#usado apenas no treino e utilizado para treinar o modelo em si
         X_transformed = self.preprocessor.fit_transform(X)
         self.feature_names = self.preprocessor.get_feature_names_out()
         return X_transformed
     
-    def transform(self, X):
+    def transform(self, X):#usado na validacao 
         return self.preprocessor.transform(X)
     
-    def save_transformer(self, path):
-        joblib.dump(self.preprocessor,path)
+    def save_transformer(self, path):#salva o modelo em um arquivo pkl
+        joblib.dump(self,path)
 
-    def load_transformer(self, path):
-        self.preprocessor = joblib.load(path)
+    def load_transformer(self, path):#persiste a aprendizagem
+        loaded_data = joblib.load(path)
+        self.preprocessor = loaded_data.preprocessor
+        self.feature_names = loaded_data.feature_names
