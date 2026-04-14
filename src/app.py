@@ -1,6 +1,5 @@
 from fastapi import FastAPI, HTTPException, Path,Request
 import sqlite3
-import pandas as pd
 import os
 from pydantic import BaseModel, Field, field_validator
 import time

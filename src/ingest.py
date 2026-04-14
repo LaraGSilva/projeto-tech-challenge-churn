@@ -1,9 +1,9 @@
 #1. Importação das bibliotecas necessárias
 import pandas as pd     
 import sqlite3
-import mlflow
 import os
 import logging
+import panderas as pa
 
 #2. Definição de camaminhos (PATHS)
 
@@ -26,6 +26,14 @@ RAW_DATA_PATH = "../data/raw/Telco_customer_churn.xlsx"
 DB_PATH = "../data/processed/churn.db" 
 
 
+# Validando apenas as colunas essenciais para o modelo
+churn_schema = pa.DataFrameSchema({
+    "customerID": pa.Column(str, pa.Check.str_matches(r"^\d{4}-[A-Z]{5}$")),
+    "tenure": pa.Column(int, pa.Check.ge(0)),
+    "MonthlyCharges": pa.Column(float),
+    "TotalCharges": pa.Column(str), # No CSV original costuma vir como string
+    "Churn": pa.Column(str, pa.Check.isin(["Yes", "No"]), nullable=True)
+})
 
 #3. Função de ingestão de dados
 def ingest_data():
