@@ -22,10 +22,10 @@ Este modelo **não** tem a intenção de identificar outros comportamentos do cl
 ### Fatores Relevantes que Influenciam o Desempenho
 
 A análise dos dados evidencia que o desempenho do modelo é fortemente influenciado por determinadas subpopulações e características de negócio. 
- Observa-se inicialmente um **desbalanceamento de classes**, com 73.46% de clientes não churn (5174) e 26.54% de churn (1869), o que impacta diretamente métricas como recall e precisão, especialmente na identificação da classe minoritária. Entre os principais fatores, destaca-se o **tipo de contrato**, sendo clientes _month-to-month_ significativamente mais propensos ao churn (42.71%), enquanto contratos de longo prazo apresentam taxas muito menores (11.27% para um ano e 2.83% para dois anos). Outro fator relevante é o **valor de cobrança mensal**, onde clientes que churnam possuem, em média, maior custo de ticket médio, indicando possível sensibilidade a preço.
+ Observa-se inicialmente um **desbalanceamento de classes**, com 73.46% de clientes não churn (5174) e 26.54% de churn (1869), o que impacta diretamente na identificação da classe minoritária. <br> Entre os principais fatores, destaca-se o **tipo de contrato**, sendo clientes _month-to-month_ significativamente mais propensos ao churn (42.71%), enquanto contratos de longo prazo apresentam taxas muito menores (11.27% para um ano e 2.83% para dois anos). Outro fator relevante é o **valor de cobrança mensal**, onde clientes que churnam possuem, em média, maior custo de ticket médio, indicando possível sensibilidade a preço.
 
 Além disso, a combinação de serviços também influencia o comportamento: clientes com **fibra óptica e telefone** apresentam a maior taxa de churn (41.89%), enquanto clientes sem internet possuem risco significativamente menor (7.40%). Esses padrões indicam que o modelo pode apresentar variações de desempenho entre grupos com perfis de serviço distintos.
- Em contrapartida, variáveis como **gênero** mostraram impacto negligenciável no churn, com distribuições praticamente equivalentes, sendo portanto consideradas de baixa relevância para performance.
+
 
 Foram considerados na avaliação fatores estruturais do dataset, como tipo de contrato, serviços contratados, tempo de relacionamento (tenure) e cobrança mensal, por apresentarem maior correlação com churn. Por outro lado, fatores externos ao dataset — como satisfação do cliente, concorrência, condições econômicas ou qualidade do atendimento — foram omitidos por não estarem disponíveis na base, o que representa uma limitação importante. 
 Dessa forma, o modelo deve ser interpretado como uma aproximação baseada em dados transacionais, podendo não capturar integralmente a complexidade do churn no mundo real.
@@ -53,8 +53,7 @@ Recall: 92,78%
 ```
 
 Alta sensibilidade para garantir que quase a totalidade dos potenciais churns receba uma ação preventiva.
-
-![comparacao_curva_roc_auc](/imgs/curva.png)
+<img src="../imgs/curva.png" alt="alt text" width="600" height="400">
 
 ### Threshold de Decisão.
 
@@ -183,8 +182,7 @@ Observação: Variação moderada entre cidades (~24% a ~33%).
 ### 
 
 ### Intervalos de Confiança (IC)
-
-![alt text](image.png)
+<img src="../imgs/image.png" alt="alt text" width="600" height="400">
 
 Os intervalos de confiança (IC 95%) foram estimados via bootstrap para avaliar a **robustez das métricas do modelo** (accuracy, recall e ROC AUC), tanto no nível global quanto por subgrupos.
 
