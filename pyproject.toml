@@ -1,20 +1,29 @@
-[project]
+[tool.poetry]
 name = "projeto-tech-challenge-churn"
 version = "0.1.0"
-dependencies = [
-    "mlflow==3.3.2",
-    "cloudpickle==3.1.1",
-    "lz4==4.4.5",
-    "numpy==2.3.5",
-    "pandas==2.3.3",
-    "psutil==7.0.0",
-    "pyarrow==21.0.0",
-    "scikit-learn==1.8.0",
-    "scipy==1.16.3",
-    "fastapi",
-    "uvicorn"
-]
+description = "Projeto de detecção de Churn - Tech Challenge"
+authors = ["Seu Nome <seu@email.com>"]
+readme = "README.md"
+packages = [{include = "src"}]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+mlflow = "3.3.2"
+cloudpickle = "3.1.1"
+lz4 = "4.4.5"
+numpy = "2.3.5"
+pandas = "2.3.3"
+psutil = "7.0.0"
+pyarrow = "21.0.0"
+scikit-learn = "1.8.0"
+scipy = "1.16.3"
+fastapi = "*"
+uvicorn = "*"
+
+[tool.poetry.group.dev.dependencies]
+pytest = "^8.0.0"
+ruff = "^0.3.0"
 
 [build-system]
-requires = ["setuptools", "wheel"]
-build-backend = "setuptools.build_meta"
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
