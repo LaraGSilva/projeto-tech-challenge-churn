@@ -39,6 +39,7 @@ A escolha do modelo final foi guiada pela minimização do Custo Total, prioriza
 ```
 AUC-ROC (Métrica de Separação): 0.847
 ```
+<img src="./imgs/curva.png" alt="alt text" width="700" height="500">
 
 Indica uma excelente capacidade do modelo em distinguir entre clientes de alto e baixo risco, mantendo a estabilidade em diferentes pontos de corte.
 
@@ -53,7 +54,7 @@ Recall: 92,78%
 ```
 
 Alta sensibilidade para garantir que quase a totalidade dos potenciais churns receba uma ação preventiva.
-<img src="./imgs/curva.png" alt="alt text" width="600" height="400">
+
 
 ### Threshold de Decisão.
 
@@ -182,7 +183,9 @@ Observação: Variação moderada entre cidades (~24% a ~33%).
 ### 
 
 ### Intervalos de Confiança (IC)
-<img src="./imgs/image.png" alt="alt text" width="600" height="400">
+
+#### Tabela comparativa das métricas + ICs:
+<img src="./imgs/image.png" alt="alt text" width="700" height="400">
 
 Os intervalos de confiança (IC 95%) foram estimados via bootstrap para avaliar a **robustez das métricas do modelo** (accuracy, recall e ROC AUC), tanto no nível global quanto por subgrupos.
 

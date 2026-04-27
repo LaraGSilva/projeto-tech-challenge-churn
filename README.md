@@ -1,4 +1,4 @@
-# 📊 Predição de Churn - Telecom
+# 📊 Tech Challenge | Modelo Preditivo de Churn
 
 [![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)](https://www.python.org/)
 [![MLflow](https://img.shields.io/badge/MLflow-3.3.2-orange.svg)](https://mlflow.org/)
@@ -8,18 +8,17 @@
 Projeto de Machine Learning para predição de churn em operadora de telecomunicações usando rede neural MLP (PyTorch) com pipeline completo de MLOps.
 
 ## 🎯 Objetivo
-
 Desenvolver um modelo de classificação binária para identificar clientes com alto risco de cancelamento, permitindo intervenções proativas da equipe de CRM e Marketing.
 
-## 📊 Dados
+## 🔄 Fluxo de Trabalho (End-to-End)
 
-- **Fonte:** [Telco Customer Churn Dataset](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
-- **Volume:** 7.043 clientes
-- **Target:** Churn (26,5% da base)
-- **Formato:** Excel (.xlsx) → Parquet processado
+O diagrama abaixo ilustra o ciclo de vida dos dados, desde a ingestão até a disponibilização dos insights via API.
 
-## 🏗️ Arquitetura do Projeto
+![fluxo mermaid](./docs/imgs/mermaid-diagram-simples.png)
 
+[Para ter mais detalhes sobre a arquitetura, acesse nossa seção: ](arquitetura.md)
+
+## 🏗️ Organização do repositório
 ```
 projeto-tech-challenge-churn/
 ├── data/
@@ -47,26 +46,6 @@ projeto-tech-challenge-churn/
 └── README.md
 ```
 
-## 🚀 Tecnologias Utilizadas
-- **Python 3.8+**
-- **PyTorch** - Rede neural MLP
-- **Scikit-learn** - Pipelines e métricas
-- **MLflow** - Experiment tracking
-- **Pandas/Numpy** - Manipulação de dados
-- **Matplotlib/Seaborn** - Visualizações
-- **Jupyter** - Notebooks interativos
-
-## 📈 Resultados
-
-### Métricas de Performance
-- **Recall:** Priorizado para minimizar falsos negativos
-- **AUC-ROC:** Discriminação entre classes
-- **Accuracy, Precision, F1-Score:** Métricas complementares
-
-### Impacto de Negócio
-- **Churn atual:** 26,5% (1.869 clientes)
-- **Ticket médio churner:** R$ 74,44/mês
-- **Redução estimada:** 20% (450 clientes retidos)
 
 ## 🛠️ Como Executar o Projeto
 
@@ -136,7 +115,7 @@ mlflow ui
 # Acesse http://localhost:5000
 ```
 
-## 📋 Funcionalidades
+## 🔸 Funcionalidades
 
 - ✅ **Pipeline completo:** Pré-processamento → Treinamento → Avaliação
 - ✅ **Tracking com MLflow:** Experimentos, métricas e artefatos
@@ -146,8 +125,27 @@ mlflow ui
 - ✅ **Documentação:** Model Canvas com impacto de negócio
 
 
-## 🙏 Agradecimentos
+##  🔸 Model canvas business
+[Para ter mais detalhes sobre os business model canvas, acesse nossa seção do Model Canvas Business](model_canvas_business.md)
 
+## 🔸 Resultados dos experimentos
+### Comparação dos modelos rastreados no MLflow:
+[Para mais detalhes dos experimentos, acesse a seção de resultados](resultados.md)
+
+##### Comparação das execuções entre modelos:
+![Runs comparison](./docs/mlflow_screenshots/2.comparacao_modelos.png)
+
+##### Métricas detalhadas do melhor modelo:
+![Best run](./docs/mlflow_screenshots/3.metrics_best_run.png)
+
+## 🔸 Model Card
+[Para ter mais detalhes sobre o modelo, acesse nossa seção de Model Card](model_card.md)
+
+
+## 🔸 Plano de monitoramento
+[Para ter mais detalhes sobre o plano de monitoramento do modelo, acesse nossa seção de Plano de Monitoramento](plano_de_monitoramento.md)
+
+
+## 🙏 Agradecimentos
 - Pós Tech Machine Learning - FIAP
-- Dataset: [Kaggle - Telco Customer Churn](https://www.kaggle.com/datasets/blastchar/telco-customer-churn)
 - Comunidade open source

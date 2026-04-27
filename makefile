@@ -45,3 +45,18 @@ help:
 	@echo "  make test         - Executa os testes com Pytest"
 	@echo "  make docker-build - Cria a imagem Docker"
 	@echo "  make docker-run   - Sobe a API no Docker"
+
+
+
+
+	.PHONY: train report register
+
+train:
+	python -m src.train
+
+report:
+	python scripts/export_runs.py
+	@echo "Resultados exportados para docs/results.md"
+
+register:
+	python -m src.register_model
