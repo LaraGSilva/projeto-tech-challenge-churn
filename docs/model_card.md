@@ -53,7 +53,7 @@ Recall: 92,78%
 ```
 
 Alta sensibilidade para garantir que quase a totalidade dos potenciais churns receba uma ação preventiva.
-<img src="../imgs/curva.png" alt="alt text" width="600" height="400">
+<img src="./imgs/curva.png" alt="alt text" width="600" height="400">
 
 ### Threshold de Decisão.
 
@@ -182,7 +182,7 @@ Observação: Variação moderada entre cidades (~24% a ~33%).
 ### 
 
 ### Intervalos de Confiança (IC)
-<img src="../imgs/image.png" alt="alt text" width="600" height="400">
+<img src="./imgs/image.png" alt="alt text" width="600" height="400">
 
 Os intervalos de confiança (IC 95%) foram estimados via bootstrap para avaliar a **robustez das métricas do modelo** (accuracy, recall e ROC AUC), tanto no nível global quanto por subgrupos.
 
