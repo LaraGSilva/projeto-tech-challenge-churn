@@ -1,6 +1,6 @@
 # Tech Challenge - Fase 1 | Model Card
 
-## 1. Model details
+## 🔶 1. Model details
 
 ```
 1. Responsável pelo modelo: Lara Gonçalves;
@@ -9,7 +9,7 @@
 4. Tipo de modelo: Modelo de rede neural multicamadas.
 ```
 
-## 2. Intended Use
+## 🔶 2. Intended Use
 
 O modelo de rede neural multicamadas foi desenvolvido para **classificar os clientes que são propensos ao churn (cancelamento do produto)**. 
 
@@ -17,7 +17,7 @@ O modelo será utilizado pela equipe de CRM da empresa, no qual será responsáv
 
 Este modelo **não** tem a intenção de identificar outros comportamentos do cliente com a empresa a não ser a propensão ao churn, portanto nao deve ser utilizado para prospecção de leads, campanhas de novos produtos ou outros.
 
-## 3. Factors
+## 🔶 3. Factors
 
 ### Fatores Relevantes que Influenciam o Desempenho
 
@@ -30,7 +30,7 @@ Além disso, a combinação de serviços também influencia o comportamento: cli
 Foram considerados na avaliação fatores estruturais do dataset, como tipo de contrato, serviços contratados, tempo de relacionamento (tenure) e cobrança mensal, por apresentarem maior correlação com churn. Por outro lado, fatores externos ao dataset — como satisfação do cliente, concorrência, condições econômicas ou qualidade do atendimento — foram omitidos por não estarem disponíveis na base, o que representa uma limitação importante. 
 Dessa forma, o modelo deve ser interpretado como uma aproximação baseada em dados transacionais, podendo não capturar integralmente a complexidade do churn no mundo real.
 
-## 4. Metrics
+## 🔶 4. Metrics
 
 ### Métricas de Desempenho e Impacto
 
@@ -72,7 +72,7 @@ A robustez dos dados reportados é garantida por:
 - ** Estratificação de Classe **: Utilização de Stratified Shuffle Split para assegurar que a distribuição de churn no teste reflita a realidade do negócio, evitando métricas inflacionadas por amostras não representativas.
 - ** Prevenção de Overfitting **: Implementação de Early Stopping e monitoramento de loss em tempo real via MLflow, garantindo que o AUC-ROC reportado seja generalizável para novos dados de produção.
 
-## 5. Evaluation Data
+## 🔶 5. Evaluation Data
 
 ### Datasets utilizados
 
@@ -103,7 +103,7 @@ Foi aplicado o seguinte pré-processamento:
 
 Essas etapas garantem consistência dos dados e evitam vazamento de informação durante a avaliação do modelo.
 
-## 6. Training Data
+## 🔶 6. Training Data
 
 ### Dataset de treino
 
@@ -123,7 +123,7 @@ O modelo foi treinado utilizando o dataset público **Telco Customer Churn (IBM)
 - Estratificação das classes devido ao desbalanceamento do dataset
 - **Normalização/padronização** de variáveis numéricas.
 
-## 7. Quantitative Analyses
+## 🔶 7. Quantitative Analyses
 
 ### Visão geral
 
@@ -185,7 +185,8 @@ Observação: Variação moderada entre cidades (~24% a ~33%).
 ### Intervalos de Confiança (IC)
 
 #### Tabela comparativa das métricas + ICs:
-<img src="./imgs/image.png" alt="alt text" width="700" height="400">
+<img src="./imgs/image.png" alt="alt text" width="600" height="600">
+[▫️Tabela comparativa de cada experimento](./docs/results.md)
 
 Os intervalos de confiança (IC 95%) foram estimados via bootstrap para avaliar a **robustez das métricas do modelo** (accuracy, recall e ROC AUC), tanto no nível global quanto por subgrupos.
 
@@ -199,7 +200,7 @@ Além disso, alguns subgrupos apresentam **intervalos mais amplos**, indicando m
 
 Observação:  Esses resultados evidenciam **gaps de performance entre segmentos**, reforçando a necessidade de avaliação de fairness.
 
-## 8. Ethical Considerations
+## 🔶 8. Ethical Considerations
 
 ### Uso de dados sensíveis
 
@@ -222,7 +223,7 @@ Observação:  Esses resultados evidenciam **gaps de performance entre segment
 - **Contratuais/organizacionais**:
 - Restrição de uso do modelo apenas para **estratégias de retenção e marketing**, evitando aplicações sensíveis (ex: crédito, elegibilidade).
 
-## 9. Caveats and Recommendations
+## 🔶 9. Caveats and Recommendations
 
 ### Cenários não testados
 

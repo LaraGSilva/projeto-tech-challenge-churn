@@ -5,7 +5,6 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-2.0+-red.svg)](https://pytorch.org/)
 [![License](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 
-Projeto de Machine Learning para predição de churn em operadora de telecomunicações usando rede neural MLP (PyTorch) com pipeline completo de MLOps.
 
 ## 🔶 Objetivo
 Desenvolver um modelo de classificação binária para identificar clientes com alto risco de cancelamento, permitindo intervenções proativas da equipe de CRM e Marketing.
@@ -14,7 +13,7 @@ Desenvolver um modelo de classificação binária para identificar clientes com 
 
 O diagrama abaixo ilustra o ciclo de vida dos dados, desde a ingestão até a disponibilização dos insights via API.
 
-<img src="./docs/imgs/mermaid-diagram-simples.png" alt="fluxo mermaid simples" width="600" height="500">
+<img src="./docs/imgs/mermaid-diagram-simples.png" alt="fluxo mermaid simples" width="700" height="600">
 
 [▫️Clique aqui para ter mais detalhes sobre a arquitetura](./docs/arquitetura.md)
 

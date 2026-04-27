@@ -1,11 +1,13 @@
 # --- MLflow e Modelos ---
 # Ignora os rastreios locais do MLflow para não poluir o git do professor
-mlruns/
-# Ignora os artefatos de modelos treinados (pesados e binários)
-models/*.pt
-models/*.pkl
-notebooks/mlruns/
+mlruns/*
 mlflow.db
+# Ignora os artefatos de modelos treinados (pesados e binários)
+models/*.pth
+models/*.pkl
+models/*.joblib
+notebooks/mlruns/*
+
 
 # --- Docker ---
 # Geralmente não ignoramos o Dockerfile, mas podemos ignorar dados persistidos
@@ -19,10 +21,7 @@ __pycache__/
 .ruff_cache/
 
 # --- Dados e Logs ---
-# Ignora o banco de dados SQLite local gerado pelo processo
 data/processed/*.db
-# Ignora logs de execução
-logs/*.log
-# Ignora arquivos de dados brutos pesados (opcional, se não forem necessários no git)
 data/raw/*.csv
-data/raw/*.xlsx
+data/processed/*.parquet
+logs/*.log
