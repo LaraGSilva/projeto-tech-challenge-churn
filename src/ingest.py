@@ -3,28 +3,29 @@ import pandas as pd
 import sqlite3
 import os
 import logging
-import panderas as pa
+import pandera.pandas as pa
+from pathlib import Path
 
 #2. Definição de camaminhos (PATHS)
 
-#Definindo formato de logging
-LOG_DIR = "../logs"
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+RAW_DATA_PATH = BASE_DIR / "data/raw/Telco_customer_churn.xlsx"
+DB_PATH = BASE_DIR / "data/processed/churn.db"
+LOG_DIR = BASE_DIR / "logs"
+
 os.makedirs(LOG_DIR, exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname) -%(message)s',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("../logs/ingest.log"),
+        logging.FileHandler(LOG_DIR / "ingest.log"),
         logging.StreamHandler()
     ]
 )
+
 logger = logging.getLogger("ingest")
-
-
-RAW_DATA_PATH = "../data/raw/Telco_customer_churn.xlsx"
-DB_PATH = "../data/processed/churn.db" 
-
 
 # Validando apenas as colunas essenciais para o modelo
 churn_schema = pa.DataFrameSchema({

@@ -2,12 +2,12 @@
 name = "projeto-tech-challenge-churn"
 version = "0.1.0"
 description = "Projeto de detecção de Churn - Tech Challenge"
-authors = ["Seu Nome <seu@email.com>"]
+authors = ["Lara Gonçalves <laragonsilva26122003@gmail.com>"]
 readme = "README.md"
 packages = [{include = "src"}]
 
 [tool.poetry.dependencies]
-python = "^3.11"
+python = ">=3.11,<3.15"
 mlflow = "3.3.2"
 cloudpickle = "3.1.1"
 lz4 = "4.4.5"
@@ -19,6 +19,9 @@ scikit-learn = "1.8.0"
 scipy = "1.16.3"
 fastapi = "*"
 uvicorn = "*"
+pandera = "^0.31.1"
+torch = "^2.11.0"
+openpyxl = "^3.1.5"
 
 [tool.poetry.group.dev.dependencies]
 pytest = "^8.0.0"

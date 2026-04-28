@@ -143,6 +143,42 @@ Busca a probabilidade de churn de um cliente específico.
   }
   ```
 
+Busca todos os clientes que são classfiicados como churn
+* **Endpoint:** `GET /prediction/all-churn`
+* **Retorno:**
+  ```json
+  {
+    {
+  "total_churn_detected": 1660,
+  "clients": [
+    {
+      "customerid": "1251-STYSZ",
+      "churn_probability": 0.510331630706787
+    },
+    {
+      "customerid": "1016-DJTSV",
+      "churn_probability": 0.589159071445465 } .......
+  }
+  }
+  ```
+Busca todos os clientes que são classfiicados como churn e informações para o negócio
+* **Endpoint:** `GET /prediction/churn-info`
+* **Retorno:**
+  ```json
+  {
+  "count": 1660,
+  "data": [
+    {
+      "customerid": "1251-STYSZ",
+      "churn_probability": 0.510331630706787,
+      "gender": "Female",
+      "city": "Glenhaven",
+      "payment_method": "Electronic check",
+      "contract": "Month-to-month",
+      "monthly_charges": 80.25
+    }]}
+  ```
+
 ---
 
 ## 🐳 Execução via Docker (Alternativa)

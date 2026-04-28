@@ -1,10 +1,10 @@
-from fastapi import FastAPI, HTTPException, Path,Request
+from fastapi import FastAPI, HTTPException, Path as FastAPIPath,Request
 import sqlite3
 import os
 from pydantic import BaseModel, Field, field_validator
 import time
 import logging
-
+from pathlib import Path
 
 #Definindo formato de logging
 LOG_DIR = "../logs"
@@ -27,9 +27,11 @@ app = FastAPI(
     version="1.0.0"
 )
 
-# Isso descobre onde o app.py está e monta o caminho correto para o banco
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DB_PATH = os.path.join(BASE_DIR, "..", "data", "processed", "churn.db")
+# =============================
+# PATHS
+# =============================
+BASE_DIR = Path(__file__).resolve().parent.parent
+DB_PATH = BASE_DIR / "data/processed/churn.db"
 
 
 def get_db_connection():
@@ -67,7 +69,7 @@ class CustomerIDRequest(BaseModel):
 
 @app.get("/prediction/{customer_id}")
 def get_prediction(
-    customer_id: str = Path(..., pattern=r"^\d{4}-[A-Z]{5}$",
+    customer_id: str = FastAPIPath(..., pattern=r"^\d{4}-[A-Z]{5}$",
                             description="O ID do cliente para busca")
 ):
     conn = get_db_connection()
@@ -89,7 +91,65 @@ def get_prediction(
         "prediction": "Sim" if result["prediction"] == 1 else "Não"
     }
 
+@app.get("/all-churn")
+def get_all_churns():
+    """Retorna todos os IDs e probabilidades de clientes com predição de Churn (1)."""
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    query = "SELECT customerid, churn_probability FROM tb_churn_predictions WHERE prediction = 1"
+    results = cursor.execute(query).fetchall()
+    conn.close()
 
+    # Converte a lista de linhas do banco para uma lista de dicionários
+    churn_list = [dict(row) for row in results]
+    
+    return {
+        "total_churn_detected": len(churn_list),
+        "clients": churn_list
+    }
+
+@app.get("/churn-info")
+def get_churn_detailed_info():
+    """
+    Retorna informações detalhadas (origem + predição) para todos os clientes 
+    com tendência de churn.
+    """
+    conn = get_db_connection()
+    cursor = conn.cursor()
+    
+    
+    query = """
+        SELECT 
+            p.customerid, 
+            p.churn_probability, 
+            o.gender,
+            o.city, 
+            o.payment_method, 
+            o.contract, 
+            o.monthly_charges
+        FROM tb_churn_predictions p
+        LEFT JOIN tb_churn_origem o ON p.customerid = o.customerid
+        WHERE p.prediction = 1
+    """
+    
+    try:
+        results = cursor.execute(query).fetchall()
+        conn.close()
+        
+        detailed_list = [dict(row) for row in results]
+        return {
+            "count": len(detailed_list),
+            "data": detailed_list
+        }
+    except sqlite3.OperationalError as e:
+        conn.close()
+        logger.error(f"Erro ao acessar tabela de origem: {e}")
+        raise HTTPException(
+            status_code=500, 
+            detail="Erro ao cruzar dados. Verifique se a tabela de origem existe no banco."
+        )
+    
 @app.middleware("http")
 async def add_process_time_header(request: Request, call_next):
     # 1. Marca o tempo de início
