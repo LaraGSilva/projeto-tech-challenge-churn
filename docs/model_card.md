@@ -69,8 +69,8 @@ Threshold Aplicado: 0.30
 A robustez dos dados reportados é garantida por:
 
 - **Validação em Teste Cego**: As métricas foram extraídas de um conjunto de teste (20% dos dados) totalmente isolado durante o treinamento e ajuste de hiperparâmetros.
-- ** Estratificação de Classe **: Utilização de Stratified Shuffle Split para assegurar que a distribuição de churn no teste reflita a realidade do negócio, evitando métricas inflacionadas por amostras não representativas.
-- ** Prevenção de Overfitting **: Implementação de Early Stopping e monitoramento de loss em tempo real via MLflow, garantindo que o AUC-ROC reportado seja generalizável para novos dados de produção.
+- **Estratificação de Classe**: Utilização de Stratified Shuffle Split para assegurar que a distribuição de churn no teste reflita a realidade do negócio, evitando métricas inflacionadas por amostras não representativas.
+- **Prevenção de Overfitting**: Implementação de Early Stopping e monitoramento de loss em tempo real via MLflow, garantindo que o AUC-ROC reportado seja generalizável para novos dados de produção.
 
 ## 🔶 5. Evaluation Data
 

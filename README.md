@@ -9,6 +9,10 @@
 ## 🔶 Objetivo
 Desenvolver um modelo de classificação binária para identificar clientes com alto risco de cancelamento, permitindo intervenções proativas da equipe de CRM e Marketing.
 
+## 🔶 Apresentação Star
+Acesse: https://canva.link/avdg2y2uvczgvk3
+
+
 ## 🔶 Fluxo de Trabalho (End-to-End)
 
 O diagrama abaixo ilustra o ciclo de vida dos dados, desde a ingestão até a disponibilização dos insights via API.
