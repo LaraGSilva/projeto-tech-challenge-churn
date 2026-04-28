@@ -1,31 +1,40 @@
 #1. Importação das bibliotecas necessárias
 import pandas as pd     
 import sqlite3
-import mlflow
 import os
 import logging
+import pandera.pandas as pa
+from pathlib import Path
 
 #2. Definição de camaminhos (PATHS)
 
-#Definindo formato de logging
-LOG_DIR = "../logs"
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+RAW_DATA_PATH = BASE_DIR / "data/raw/Telco_customer_churn.xlsx"
+DB_PATH = BASE_DIR / "data/processed/churn.db"
+LOG_DIR = BASE_DIR / "logs"
+
 os.makedirs(LOG_DIR, exist_ok=True)
 
 logging.basicConfig(
     level=logging.INFO,
-    format='%(asctime)s - %(name)s - %(levelname) -%(message)s',
+    format='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
     handlers=[
-        logging.FileHandler("../logs/ingest.log"),
+        logging.FileHandler(LOG_DIR / "ingest.log"),
         logging.StreamHandler()
     ]
 )
+
 logger = logging.getLogger("ingest")
 
-
-RAW_DATA_PATH = "../data/raw/Telco_customer_churn.xlsx"
-DB_PATH = "../data/processed/churn.db" 
-
-
+# Validando apenas as colunas essenciais para o modelo
+churn_schema = pa.DataFrameSchema({
+    "customerID": pa.Column(str, pa.Check.str_matches(r"^\d{4}-[A-Z]{5}$")),
+    "tenure": pa.Column(int, pa.Check.ge(0)),
+    "MonthlyCharges": pa.Column(float),
+    "TotalCharges": pa.Column(str), # No CSV original costuma vir como string
+    "Churn": pa.Column(str, pa.Check.isin(["Yes", "No"]), nullable=True)
+})
 
 #3. Função de ingestão de dados
 def ingest_data():
