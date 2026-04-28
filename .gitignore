@@ -1,2 +1,27 @@
-data/
-**/__pycache__/
+# --- MLflow e Modelos ---
+# Ignora os rastreios locais do MLflow para não poluir o git do professor
+mlruns/*
+mlflow.db
+# Ignora os artefatos de modelos treinados (pesados e binários)
+models/*.pth
+models/*.pkl
+models/*.joblib
+notebooks/mlruns/*
+
+
+# --- Docker ---
+# Geralmente não ignoramos o Dockerfile, mas podemos ignorar dados persistidos
+.docker/
+
+# --- Cache do Python e Ferramentas ---
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.ruff_cache/
+
+# --- Dados e Logs ---
+data/processed/*.db
+data/raw/*.csv
+data/processed/*.parquet
+logs/*.log

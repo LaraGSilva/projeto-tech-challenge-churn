@@ -11,9 +11,23 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 import mlflow
 import mlflow.pytorch
-
+from pathlib import Path
 # Importando sua classe modular
 from preprocess import ChurnPreprocessor
+
+# =============================
+# PATHS
+# =============================
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+DB_PATH = BASE_DIR / "data/processed/churn.db"
+MODEL_DIR = BASE_DIR / "models"
+MODEL_PATH = MODEL_DIR / "preprocessor.pkl"
+MODEL_BEST_PATH = MODEL_DIR / "best_model.pt"
+LOG_DIR = BASE_DIR / "logs"
+
+os.makedirs(MODEL_DIR, exist_ok=True)
+os.makedirs(LOG_DIR, exist_ok=True)
 
 # 1. Configuração de Logging
 LOG_DIR = "../logs"
@@ -45,12 +59,15 @@ class ChurnMLP(nn.Module):
     def __init__(self, input_size):
         super(ChurnMLP, self).__init__()
         self.network = nn.Sequential(
-            nn.Linear(input_size, 32),
+            nn.Linear(input_size, 128),
+            nn.BatchNorm1d(128),
             nn.ReLU(),
             nn.Dropout(0.3),
-            nn.Linear(32, 16),
+            nn.Linear(128, 64),
+            nn.BatchNorm1d(64),
             nn.ReLU(),
-            nn.Linear(16, 1)
+            nn.Dropout(0.2),
+            nn.Linear(64, 1)
         )
 
     def forward(self, x):
@@ -60,12 +77,11 @@ class ChurnMLP(nn.Module):
 def run_training():
     # --- CARGA E SPLIT ---
     logger.info("Carregando dados do SQLite...")
-    conn = sqlite3.connect("../data/processed/churn.db")
+    conn = sqlite3.connect(DB_PATH)
     df = pd.read_sql("SELECT * FROM tb_churn_origem", conn)
     conn.close()
 
     # Removendo colunas que causam Data Leakage (Vazamento)
-    # Adicionamos churn_label e churn_score como você identificou
     cols_to_drop = ['churn_value', 'customerid', 'churn_reason', 'churn_label', 'churn_score']
     X = df.drop(columns=[c for c in cols_to_drop if c in df.columns])
     y = df['churn_value']
@@ -77,12 +93,17 @@ def run_training():
     # --- PREPROCESSAMENTO ---
     logger.info(f"Features utilizadas: {X.columns.tolist()}")
     processor = ChurnPreprocessor()
+
     processor.create_pipeline(X_train)
+
     X_train_proc = processor.fit_transform(X_train)
     X_test_proc = processor.transform(X_test)
 
-    os.makedirs("../models", exist_ok=True)
-    processor.save_transformer("../models/preprocessor.pkl")
+    # salvar transformer
+    processor.save_transformer(MODEL_PATH)
+
+    logger.info(f"Shape treino: {X_train_proc.shape}")
+    logger.info(f"Shape teste: {X_test_proc.shape}")
 
     # --- PREPARAÇÃO PYTORCH ---
     train_loader = DataLoader(ChurnDataset(X_train_proc, y_train), batch_size=64, shuffle=True)
@@ -91,7 +112,7 @@ def run_training():
     # --- MODELO E OTIMIZADOR ---
     model = ChurnMLP(input_size=X_train_proc.shape[1])
     criterion = nn.BCEWithLogitsLoss()
-    optimizer = optim.Adam(model.parameters(), lr=0.0005) # Taxa de aprendizado ajustada
+    optimizer = optim.Adam(model.parameters(), lr=0.001) # Taxa de aprendizado ajustada
 
     # --- CONFIGURAÇÃO MLFLOW ---
     mlflow.set_tracking_uri("sqlite:///../mlflow.db")
@@ -100,14 +121,14 @@ def run_training():
     with mlflow.start_run(run_name="MLP_Training_With_Metrics"):
         mlflow.log_params({
             "model_type": "MLP",
-            "lr": 0.0005,
+            "lr": 0.001,
             "batch_size": 64,
             "dropout": 0.3
         })
 
         # --- LOOP DE TREINO COM EARLY STOPPING ---
         epochs = 100
-        patience = 10
+        patience = 12
         best_loss = float('inf')
         counter = 0
 
@@ -145,7 +166,7 @@ def run_training():
             # Lógica Early Stopping baseada na Val Loss
             if avg_val_loss < best_loss:
                 best_loss = avg_val_loss
-                torch.save(model.state_dict(), "../models/best_model.pt")
+                torch.save(model.state_dict(), MODEL_BEST_PATH)
                 counter = 0
             else:
                 counter += 1
@@ -155,7 +176,7 @@ def run_training():
 
         # --- CÁLCULO DAS MÉTRICAS DE PERFORMANCE FINAIS ---
         logger.info("Calculando métricas de performance no conjunto de teste...")
-        model.load_state_dict(torch.load("../models/best_model.pt"))
+        model.load_state_dict(torch.load(MODEL_BEST_PATH))
         model.eval()
         
         all_preds = []
